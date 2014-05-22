@@ -26,13 +26,16 @@ View.prototype = {
         c.height = 1500;
         var aptArray = this.howManyBlocks(appointments)
         console.log(aptArray)
+        var counter = 0
         for (var i = 0; i < aptArray.length; i++) {
-            groupAptsArray = appointments
+            groupAptsArray = appointments.slice(counter, counter + aptArray[i])
+            counter = counter + aptArray[i]
+            console.log(groupAptsArray)
             for (var j = 0; j < groupAptsArray.length; j++) {
                 var canvasWidth = parseInt($('.daycontainer').css('width'))
-                var startTime = appointments[j]["start_time"]
-                var endTime = appointments[j]["end_time"]
-                var eventName = appointments[j]["event_name"]
+                var startTime = groupAptsArray[j]["start_time"]
+                var endTime = groupAptsArray[j]["end_time"]
+                var eventName = groupAptsArray[j]["event_name"]
                 if (startTime < 12) {
                     startTimeSuffix = "am"
                 } else {
