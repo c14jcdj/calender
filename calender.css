@@ -36,6 +36,8 @@ table {
    margin-right: auto;
    height: 450px;
   background-color: rgba(255, 255, 255, 0.5);
+
+
 }
 
 
@@ -57,4 +59,15 @@ tr:nth-child(2) {
 
 tr:nth-child(2) td {
   height: 30px;
+}
+
+
+.day {
+  z-index: 1;
+  display: none;
+  background-color: black;
+  height: 500px;
+  width: 25%;
+  position: relative;
+  left: 70%;
 }
