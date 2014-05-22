@@ -23,13 +23,23 @@ View.prototype = {
         var startTime = appointments[0]["start_time"]
         var endTime = appointments[0]["end_time"]
         var eventName = appointments[0]["event_name"]
-        var text = eventName + ": " + startTime + "-" + endTime
+        if (startTime < 12) {
+            startTimeSuffix = "am"
+        } else {
+            startTimeSuffix = "pm"
+        }
+        if (endTime >= 12) {
+            endTimeSuffix = "pm"
+        } else {
+            endTimeSuffix = "am"
+        }
+        var text = eventName + ": " + startTime + startTimeSuffix + "-" + endTime + endTimeSuffix
         var c = document.getElementById("myCanvas");
         c.height = 1500;
-
+        var rectHeight = startTime * 63
         var ctx = c.getContext("2d");
         ctx.fillStyle = 'rgba(255,255,255,0.5)';
-        ctx.fillRect(0, 0, canvasWidth, 60);
+        ctx.fillRect(0, rectHeight, canvasWidth, 60);
         ctx.font = "15px Georgia";
         ctx.fillStyle = '#000000';
         ctx.fillText(text, 50, 35);
