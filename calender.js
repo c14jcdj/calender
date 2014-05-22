@@ -70,8 +70,13 @@ View.prototype = {
                     } else {
                         thisAptEnd = appointments[i]['end_time']
                     }
+                    console.log('endtime:' + thisAptEnd)
                     j = j + 1;
-                    if (i + j > appointments.length - 1) {
+                    console.log('counter' + counter)
+                    console.log(i)
+                    console.log(j)
+                    console.log(appointments.length)
+                    if (i + (j - i) >= (appointments.length - 1)) {
                         break
                     }
                 }
