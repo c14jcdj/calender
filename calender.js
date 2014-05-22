@@ -52,9 +52,9 @@ View.prototype = {
                 var rectWidth = parseInt($('.daycontainer').css('width'))
                 var oneHour = (parseInt($('.daycontainer').css('height')) / 24) * 3
                 var hours = endTime - startTime
-                var rectHeight = hours * oneHour
+                var rectHeight = hours * oneHour - 5
                 if (aptArray[i] == 1) {
-                    var rectY = (startTime * oneHour)
+                    var rectY = (startTime * oneHour) - 15
                     var rectX = 0
                     var textNameX = startTime * oneHour + (oneHour / 2)
                     var textNameY = rectWidth / 6
@@ -62,10 +62,10 @@ View.prototype = {
                     var textTimeY = rectWidth / 2.5
 
                 } else if (aptArray[i] == 2) {
-                    rectY = (startTime * oneHour)
+                    rectY = (startTime * oneHour) - 15
                     rectWidth = rectWidth / 2.2
-                    textNameX = startTime * oneHour + (oneHour / 2)
-                    textTimeX = startTime * oneHour + (oneHour / 1.2)
+                    textNameX = startTime * oneHour + (oneHour / 5)
+                    textTimeX = startTime * oneHour + (oneHour / 2.5)
                     if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
                         textNameY = rectWidth / 3
                         textTimeY = rectWidth / 3
@@ -77,10 +77,11 @@ View.prototype = {
                     }
                 } else if (aptArray[i] == 3) {
                     if (groupAptsArray[1]['end_time'] < groupAptsArray[2]['start_time']) {
-                        rectY = (startTime * oneHour)
+                        rectHeight = hours * oneHour
+                        rectY = (startTime * oneHour) - 20
                         rectWidth = rectWidth / 2.2
-                        textNameX = startTime * oneHour + (oneHour / 2)
-                        textTimeX = startTime * oneHour + (oneHour / 1.2)
+                        textNameX = startTime * oneHour + (oneHour / 5)
+                        textTimeX = startTime * oneHour + (oneHour / 2.5)
                         if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
                             textNameY = rectWidth / 3
                             textTimeY = rectWidth / 3
@@ -92,12 +93,19 @@ View.prototype = {
                         }
                     }
                 } else {
-                    console.log('hey')
+                    console.log('overlap goes')
+                }
+
+                if (hours == .5) {
+                    ctx.font = "11px Georgia";
+                    textNameX = startTime * oneHour - 5
+                    textTimeX = startTime * oneHour + 5
+                } else {
+                    ctx.font = "15px Georgia";
                 }
                 ctx.fillStyle = 'rgba(255,255,255,0.5)';
                 console.log('rH2' + rectHeight)
                 ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
-                ctx.font = "15px Georgia";
                 ctx.fillStyle = '#000000';
                 ctx.fillText(textName, textNameY, textNameX);
                 ctx.fillText(textTime, textTimeY, textTimeX);
@@ -201,7 +209,7 @@ Calender.prototype = {
                 "event_name": "Event A",
                 "start_time": 9,
                 "end_time": 11
-            },{
+            }, {
                 "event_name": "Event B",
                 "start_time": 11,
                 "end_time": 12
