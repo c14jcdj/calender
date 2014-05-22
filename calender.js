@@ -32,10 +32,10 @@ Calender.prototype = {
         var col = startCol;
         var row = 3;
         for (var i = 1; i < numOfDays + 1; i++) {
-            $('tr:nth-child(' + row + ') td:nth-child(' + col + ')').html(i)
+            $('#month tr:nth-child(' + row + ') td:nth-child(' + col + ')').html(i)
             col = col + 1;
             if (col == 8 && i != numOfDays) {
-                $('table').append('<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>')
+                $('#month').append('<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>')
                 col = 1;
                 row = row + 1;
             }
@@ -102,14 +102,14 @@ Calender.prototype = {
 
     displayAppointments: function(appointments) {
         console.log(appointments)
-        $('table').css({
+        $('#month').css({
             'width': '60%',
             'height': '400px',
             'margin-left': '5%',
             'float': 'left',
             'position': 'relative'
         })
-        $('.day').css('display', 'block')
+        $('.daycontainer').css('display', 'inline-block')
     }
 
 
