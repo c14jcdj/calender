@@ -61,20 +61,34 @@ View.prototype = {
 
                 } else if (aptArray[i] == 2) {
                     rectY = (startTime * rectHeight)
-                    rectWidth = rectWidth / 2
+                    rectWidth = rectWidth / 2.2
                     textNameX = startTime * rectHeight + (rectHeight / 2)
                     textTimeX = startTime * rectHeight + (rectHeight / 1.2)
                     if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
                         textNameY = rectWidth / 3
                         textTimeY = rectWidth / 3
-                        rectX = 0
+                        rectX = 2
                     } else {
-                        rectX = rectWidth
+                        rectX = rectWidth + 6
                         textNameY = rectWidth + rectWidth / 5
                         textTimeY = rectWidth + rectWidth / 5
                     }
-                } else if (aptArray[i] == 4) {
-                    console.log('yo')
+                } else if (aptArray[i] == 3) {
+                    if (groupAptsArray[1]['end_time'] < groupAptsArray[2]['start_time']) {
+                        rectY = (startTime * rectHeight)
+                        rectWidth = rectWidth / 2.2
+                        textNameX = startTime * rectHeight + (rectHeight / 2)
+                        textTimeX = startTime * rectHeight + (rectHeight / 1.2)
+                        if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
+                            textNameY = rectWidth / 3
+                            textTimeY = rectWidth / 3
+                            rectX = 2
+                        } else {
+                            rectX = rectWidth + 6
+                            textNameY = rectWidth + rectWidth / 5
+                            textTimeY = rectWidth + rectWidth / 5
+                        }
+                    }
                 } else {
                     console.log('hey')
                 }
@@ -112,14 +126,7 @@ View.prototype = {
                     }
                 }
                 aptArray.push(counter)
-                if (counter == 3) {
-                    console.log('yes')
-                    if (appointments[i + 1]['end_time'] < appointments[i + 2]['start_time']) {
-                        console.log('no overlap')
-                        aptArray[aptArray.length - 1] = 3.1
-                        console.log(aptArray)
-                    }
-                }
+
                 i = j
             } else {
                 counter = 1
