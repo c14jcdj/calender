@@ -49,9 +49,9 @@ View.prototype = {
                 var textTime = startTime + startTimeSuffix + "-" + endTime + endTimeSuffix
 
 
+                var rectWidth = parseInt($('.daycontainer').css('width'))
+                var rectHeight = (parseInt($('.daycontainer').css('height')) / 24) * 3
                 if (aptArray[i] == 1) {
-                    var rectWidth = parseInt($('.daycontainer').css('width'))
-                    var rectHeight = (parseInt($('.daycontainer').css('height')) / 24) * 3
                     var rectY = (startTime * rectHeight)
                     var rectX = 0
                     var textNameX = startTime * rectHeight + (rectHeight / 2)
@@ -60,24 +60,18 @@ View.prototype = {
                     var textTimeY = rectWidth / 2.5
 
                 } else if (aptArray[i] == 2) {
+                    rectY = (startTime * rectHeight)
+                    rectWidth = rectWidth / 2
+                    textNameX = startTime * rectHeight + (rectHeight / 2)
+                    textTimeX = startTime * rectHeight + (rectHeight / 1.2)
                     if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
-                        var rectX = 0
-                        var rectY = startTime * 63
-                        var rectWidth = parseInt($('.daycontainer').css('width')) / 2
-                        var rectHeight = 60
-                        var textNameX = startTime * 80
-                        var textNameY = 50
-                        var textTimeX = startTime * 80
-                        var textTimeY = 50
+                        textNameY = rectWidth / 3
+                        textTimeY = rectWidth / 3
+                        rectX = 0
                     } else {
-                        var rectX = rectWidth
-                        var rectY = startTime * 63
-                        var rectWidth = parseInt($('.daycontainer').css('width')) / 2
-                        var rectHeight = 60
-                        var textNameX = startTime * 80
-                        var textNameY = 50
-                        var textTimeX = startTime * 80
-                        var textTimeY = 50
+                        rectX = rectWidth
+                        textNameY = rectWidth + rectWidth / 5
+                        textTimeY = rectWidth + rectWidth / 5
                     }
                 } else {
                     console.log('yo')
