@@ -73,8 +73,10 @@ View.prototype = {
                         textNameY = rectWidth + rectWidth / 5
                         textTimeY = rectWidth + rectWidth / 5
                     }
-                } else {
+                } else if (aptArray[i] == 4) {
                     console.log('yo')
+                } else {
+                    console.log('hey')
                 }
                 ctx.fillStyle = 'rgba(255,255,255,0.5)';
                 ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
@@ -110,6 +112,14 @@ View.prototype = {
                     }
                 }
                 aptArray.push(counter)
+                if (counter == 3) {
+                    console.log('yes')
+                    if (appointments[i + 1]['end_time'] < appointments[i + 2]['start_time']) {
+                        console.log('no overlap')
+                        aptArray[aptArray.length - 1] = 3.1
+                        console.log(aptArray)
+                    }
+                }
                 i = j
             } else {
                 counter = 1
@@ -186,19 +196,19 @@ Calender.prototype = {
                 "event_name": "Event C",
                 "start_time": 11.5,
                 "end_time": 12.5
+            }, {
+                "event_name": "Event D",
+                "start_time": 13,
+                "end_time": 14.5
+            }, {
+                "event_name": "Event E",
+                "start_time": 13,
+                "end_time": 13.5
+            }, {
+                "event_name": "Event F",
+                "start_time": 14,
+                "end_time": 14.5
             }]
-            // }, {
-            //     "event_name": "Event D",
-            //     "start_time": 13,
-            //     "end_time": 14.5
-            // }, {
-            //     "event_name": "Event E",
-            //     "start_time": 13,
-            //     "end_time": 13.5
-            // }, {
-            //     "event_name": "Event F",
-            //     "start_time": 14,
-            //     "end_time": 14.5
             // }, {
             //     "event_name": "Event G",
             //     "start_time": 15,

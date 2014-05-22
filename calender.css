@@ -69,14 +69,6 @@ td {
 }
 
 
-/*.canvas {
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-
-}*/
-
 .daycontainer {
   position: absolute;
   display: none;
@@ -90,7 +82,6 @@ td {
 #myCanvas {
   position: absolute;
   z-index: 1;
-  border: 2px solid green;
   width: 100%;
   height: 1580px;
   top: 0;
