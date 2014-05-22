@@ -1,7 +1,44 @@
 $(document).on('ready', function() {
     calenderController = new CalenderController;
-    calenderController.run(new Calender)
+    calenderController.run(new Calender, new View)
 })
+
+function View() {}
+
+View.prototype = {
+
+    toggleSideBar: function() {
+        $('#month').css({
+            'width': '60%',
+            'height': '400px',
+            'margin-left': '5%',
+            'float': 'left',
+            'position': 'relative'
+        })
+        $('.daycontainer').css('display', 'inline-block')
+    },
+
+    renderApts: function(appointments) {
+        var canvasWidth = parseInt($('.daycontainer').css('width'))
+        var startTime = appointments[0]["start_time"]
+        var endTime = appointments[0]["end_time"]
+        var eventName = appointments[0]["event_name"]
+        var text = eventName + ": " + startTime + "-" + endTime
+        var c = document.getElementById("myCanvas");
+        c.height = 1500;
+
+        var ctx = c.getContext("2d");
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.fillRect(0, 0, canvasWidth, 60);
+        ctx.font = "15px Georgia";
+        ctx.fillStyle = '#000000';
+        ctx.fillText(text, 50, 35);
+
+
+
+    }
+
+}
 
 function Calender() {
 
@@ -16,6 +53,7 @@ function Calender() {
     }
 
 }
+
 
 Calender.prototype = {
 
@@ -43,7 +81,7 @@ Calender.prototype = {
 
     },
 
-    bindDays: function() {
+    bindDays: function(view) {
         var that = this;
         console.log(that)
         $('td').on('click', function() {
@@ -96,20 +134,14 @@ Calender.prototype = {
                 "start_time": 16.5,
                 "end_time": 17.5
             }]
-            that.displayAppointments(ajaxresponse)
+            that.displayAppointments(ajaxresponse, view)
         })
     },
 
-    displayAppointments: function(appointments) {
+    displayAppointments: function(appointments, view) {
         console.log(appointments)
-        $('#month').css({
-            'width': '60%',
-            'height': '400px',
-            'margin-left': '5%',
-            'float': 'left',
-            'position': 'relative'
-        })
-        $('.daycontainer').css('display', 'inline-block')
+        view.toggleSideBar();
+        view.renderApts(appointments);
     }
 
 
@@ -119,14 +151,11 @@ function CalenderController() {}
 
 CalenderController.prototype = {
 
-    run: function(calender) {
+    run: function(calender, view) {
         var info = calender.getCalenderInfo();
         calender.fillOutCalender(info);
-        calender.bindDays();
-        var c = document.getElementById("myCanvas");
-        var ctx = c.getContext("2d");
-        ctx.fillStyle = "#FF0000";
-        ctx.fillRect(0, 0, 75, 75);
+        calender.bindDays(view);
+
 
     }
 }
