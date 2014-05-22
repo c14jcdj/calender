@@ -1,3 +1,9 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('images/ocean.jpg')
+}
+
 .background {
   position: absolute;
   z-index: 0;
@@ -8,29 +14,42 @@
   opacity: .8;
 }
 
-.container {
+/*.container {
   position: relative;
   z-index: 1;
-}
-
-
-h1 {
-  color: white;
-  font-size: 2em;
-  text-align: center;
+}*/
+.container{
+   position: absolute;
+   top: 50%;
+   margin-top: -250px;/* half of #content height*/
+   left: 0;
+   width: 100%;
 }
 
 table {
   margin: 0 auto;
-  border: 1px solid blue;
+  border: 1px solid black;
+  text-shadow:
+    -2px -2px 0 white,
+    1px -1px 0 white,
+    -1px 1px 0 white,
+    1px 1px 0 white;
   border-collapse: collapse;
-  background-color: white;
-  opacity: .3;
+  width: 84%;
+   margin-left: auto;
+   margin-right: auto;
+   height: 500px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+th {
+  color: black;
+  font-size: 2em;
 }
 
 td {
   border: 1px solid black;
-  height: 75px;
-  width: 100px;
+  height: 60px;
+  width: 12%;
 }
 
