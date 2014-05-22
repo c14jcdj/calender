@@ -123,6 +123,10 @@ CalenderController.prototype = {
         var info = calender.getCalenderInfo();
         calender.fillOutCalender(info);
         calender.bindDays();
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(0, 0, 75, 75);
 
     }
 }
