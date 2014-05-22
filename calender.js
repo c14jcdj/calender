@@ -19,35 +19,39 @@ View.prototype = {
     },
 
     renderApts: function(appointments) {
+        console.log(appointments)
         var c = document.getElementById("myCanvas");
-        c.height = 1500;
         var ctx = c.getContext("2d");
+        ctx.clearRect(0, 0, c.width, c.height)
+        c.height = 1500;
         var aptArray = this.howManyBlocks(appointments)
         console.log(aptArray)
-        for (var i = 0; i < appointments.length; i++) {
-            var canvasWidth = parseInt($('.daycontainer').css('width'))
-            var startTime = appointments[i]["start_time"]
-            var endTime = appointments[i]["end_time"]
-            var eventName = appointments[i]["event_name"]
-            if (startTime < 12) {
-                startTimeSuffix = "am"
-            } else {
-                startTimeSuffix = "pm"
+        for (var i = 0; i < aptArray.length; i++) {
+            groupAptsArray = appointments
+            for (var j = 0; j < groupAptsArray.length; j++) {
+                var canvasWidth = parseInt($('.daycontainer').css('width'))
+                var startTime = appointments[j]["start_time"]
+                var endTime = appointments[j]["end_time"]
+                var eventName = appointments[j]["event_name"]
+                if (startTime < 12) {
+                    startTimeSuffix = "am"
+                } else {
+                    startTimeSuffix = "pm"
+                }
+                if (endTime >= 12) {
+                    endTimeSuffix = "pm"
+                } else {
+                    endTimeSuffix = "am"
+                }
+                var text = eventName + ": " + startTime + startTimeSuffix + "-" + endTime + endTimeSuffix
+                var rectHeight = startTime * 63
+                var textHeight = startTime * 67
+                ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                ctx.fillRect(0, rectHeight, canvasWidth, 60);
+                ctx.font = "15px Georgia";
+                ctx.fillStyle = '#000000';
+                ctx.fillText(text, 50, textHeight);
             }
-            if (endTime >= 12) {
-                endTimeSuffix = "pm"
-            } else {
-                endTimeSuffix = "am"
-            }
-            var text = eventName + ": " + startTime + startTimeSuffix + "-" + endTime + endTimeSuffix
-            var rectHeight = startTime * 63
-            var textHeight = startTime * 67
-            ctx.fillStyle = 'rgba(255,255,255,0.5)';
-            ctx.fillRect(0, rectHeight, canvasWidth, 60);
-            ctx.font = "15px Georgia";
-            ctx.fillStyle = '#000000';
-            ctx.fillText(text, 50, textHeight);
-
         }
     },
 
@@ -59,8 +63,6 @@ View.prototype = {
             var nextAptEnd = appointments[i + 1]['end_time']
             var thisAptStart = appointments[i]['start_time']
             var thisAptEnd = appointments[i]['end_time']
-            console.log("Start" + thisAptStart)
-            console.log("End" + thisAptEnd)
             if (thisAptStart <= nextAptStart && nextAptStart < thisAptEnd) {
                 var j = i
                 while (appointments[i]['start_time'] <= appointments[j + 1]['start_time'] && appointments[j + 1]['start_time'] < thisAptEnd) {
@@ -70,12 +72,7 @@ View.prototype = {
                     } else {
                         thisAptEnd = appointments[i]['end_time']
                     }
-                    console.log('endtime:' + thisAptEnd)
                     j = j + 1;
-                    console.log('counter' + counter)
-                    console.log(i)
-                    console.log(j)
-                    console.log(appointments.length)
                     if (i + (j - i) >= (appointments.length - 1)) {
                         break
                     }
@@ -86,7 +83,6 @@ View.prototype = {
                 counter = 1
                 aptArray.push(counter)
             }
-            // appointments.splice(i, counter)
         }
         return aptArray
         console.log(aptArray)
@@ -137,7 +133,6 @@ Calender.prototype = {
 
     bindDays: function(view) {
         var that = this;
-        console.log(that)
         $('td').on('click', function() {
             var day = $(this).html();
             var month = $('th').html();
@@ -193,7 +188,6 @@ Calender.prototype = {
     },
 
     displayAppointments: function(appointments, view) {
-        console.log(appointments)
         view.toggleSideBar();
         view.renderApts(appointments);
     }
