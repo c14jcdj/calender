@@ -19,33 +19,72 @@ View.prototype = {
     },
 
     renderApts: function(appointments) {
-        var canvasWidth = parseInt($('.daycontainer').css('width'))
-        var startTime = appointments[0]["start_time"]
-        var endTime = appointments[0]["end_time"]
-        var eventName = appointments[0]["event_name"]
-        if (startTime < 12) {
-            startTimeSuffix = "am"
-        } else {
-            startTimeSuffix = "pm"
-        }
-        if (endTime >= 12) {
-            endTimeSuffix = "pm"
-        } else {
-            endTimeSuffix = "am"
-        }
-        var text = eventName + ": " + startTime + startTimeSuffix + "-" + endTime + endTimeSuffix
         var c = document.getElementById("myCanvas");
         c.height = 1500;
-        var rectHeight = startTime * 63
         var ctx = c.getContext("2d");
-        ctx.fillStyle = 'rgba(255,255,255,0.5)';
-        ctx.fillRect(0, rectHeight, canvasWidth, 60);
-        ctx.font = "15px Georgia";
-        ctx.fillStyle = '#000000';
-        ctx.fillText(text, 50, 35);
+        var aptArray = this.howManyBlocks(appointments)
+        console.log(aptArray)
+        for (var i = 0; i < appointments.length; i++) {
+            var canvasWidth = parseInt($('.daycontainer').css('width'))
+            var startTime = appointments[i]["start_time"]
+            var endTime = appointments[i]["end_time"]
+            var eventName = appointments[i]["event_name"]
+            if (startTime < 12) {
+                startTimeSuffix = "am"
+            } else {
+                startTimeSuffix = "pm"
+            }
+            if (endTime >= 12) {
+                endTimeSuffix = "pm"
+            } else {
+                endTimeSuffix = "am"
+            }
+            var text = eventName + ": " + startTime + startTimeSuffix + "-" + endTime + endTimeSuffix
+            var rectHeight = startTime * 63
+            var textHeight = startTime * 67
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+            ctx.fillRect(0, rectHeight, canvasWidth, 60);
+            ctx.font = "15px Georgia";
+            ctx.fillStyle = '#000000';
+            ctx.fillText(text, 50, textHeight);
 
+        }
+    },
 
-
+    howManyBlocks: function(appointments) {
+        var aptArray = []
+        for (var i = 0; i < appointments.length - 1; i++) {
+            var counter = 1
+            var nextAptStart = appointments[i + 1]['start_time']
+            var nextAptEnd = appointments[i + 1]['end_time']
+            var thisAptStart = appointments[i]['start_time']
+            var thisAptEnd = appointments[i]['end_time']
+            console.log("Start" + thisAptStart)
+            console.log("End" + thisAptEnd)
+            if (thisAptStart <= nextAptStart && nextAptStart < thisAptEnd) {
+                var j = i
+                while (appointments[i]['start_time'] <= appointments[j + 1]['start_time'] && appointments[j + 1]['start_time'] < thisAptEnd) {
+                    counter = counter + 1;
+                    if (appointments[j + 1]['end_time'] > appointments[i]['end_time']) {
+                        thisAptEnd = appointments[j + 1]['end_time']
+                    } else {
+                        thisAptEnd = appointments[i]['end_time']
+                    }
+                    j = j + 1;
+                    if (i + j > appointments.length - 1) {
+                        break
+                    }
+                }
+                aptArray.push(counter)
+                i = j
+            } else {
+                counter = 1
+                aptArray.push(counter)
+            }
+            // appointments.splice(i, counter)
+        }
+        return aptArray
+        console.log(aptArray)
     }
 
 }
