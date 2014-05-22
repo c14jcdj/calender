@@ -32,7 +32,6 @@ View.prototype = {
             counter = counter + aptArray[i]
             console.log(groupAptsArray)
             for (var j = 0; j < groupAptsArray.length; j++) {
-                var canvasWidth = parseInt($('.daycontainer').css('width'))
                 var startTime = groupAptsArray[j]["start_time"]
                 var endTime = groupAptsArray[j]["end_time"]
                 var eventName = groupAptsArray[j]["event_name"]
@@ -46,14 +45,50 @@ View.prototype = {
                 } else {
                     endTimeSuffix = "am"
                 }
-                var text = eventName + ": " + startTime + startTimeSuffix + "-" + endTime + endTimeSuffix
-                var rectHeight = startTime * 63
-                var textHeight = startTime * 67
+                var textName = eventName + ": "
+                var textTime = startTime + startTimeSuffix + "-" + endTime + endTimeSuffix
+
+
+                if (aptArray[i] == 1) {
+                    var rectWidth = parseInt($('.daycontainer').css('width'))
+                    var rectHeight = (parseInt($('.daycontainer').css('height')) / 24) * 3
+                    var rectY = (startTime * rectHeight)
+                    var rectX = 0
+                    var textNameX = startTime * rectHeight + (rectHeight / 2)
+                    var textNameY = rectWidth / 6
+                    var textTimeX = startTime * rectHeight + (rectHeight / 2)
+                    var textTimeY = rectWidth / 2.5
+
+                } else if (aptArray[i] == 2) {
+                    if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
+                        var rectX = 0
+                        var rectY = startTime * 63
+                        var rectWidth = parseInt($('.daycontainer').css('width')) / 2
+                        var rectHeight = 60
+                        var textNameX = startTime * 80
+                        var textNameY = 50
+                        var textTimeX = startTime * 80
+                        var textTimeY = 50
+                    } else {
+                        var rectX = rectWidth
+                        var rectY = startTime * 63
+                        var rectWidth = parseInt($('.daycontainer').css('width')) / 2
+                        var rectHeight = 60
+                        var textNameX = startTime * 80
+                        var textNameY = 50
+                        var textTimeX = startTime * 80
+                        var textTimeY = 50
+                    }
+                } else {
+                    console.log('yo')
+                }
                 ctx.fillStyle = 'rgba(255,255,255,0.5)';
-                ctx.fillRect(0, rectHeight, canvasWidth, 60);
+                ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
                 ctx.font = "15px Georgia";
                 ctx.fillStyle = '#000000';
-                ctx.fillText(text, 50, textHeight);
+                ctx.fillText(textName, textNameY, textNameX);
+                ctx.fillText(textTime, textTimeY, textTimeX);
+
             }
         }
     },
@@ -157,35 +192,36 @@ Calender.prototype = {
                 "event_name": "Event C",
                 "start_time": 11.5,
                 "end_time": 12.5
-            }, {
-                "event_name": "Event D",
-                "start_time": 13,
-                "end_time": 14.5
-            }, {
-                "event_name": "Event E",
-                "start_time": 13,
-                "end_time": 13.5
-            }, {
-                "event_name": "Event F",
-                "start_time": 14,
-                "end_time": 14.5
-            }, {
-                "event_name": "Event G",
-                "start_time": 15,
-                "end_time": 16
-            }, {
-                "event_name": "Event H",
-                "start_time": 15,
-                "end_time": 16.5
-            }, {
-                "event_name": "Event I",
-                "start_time": 15.5,
-                "end_time": 17.0
-            }, {
-                "event_name": "Event J",
-                "start_time": 16.5,
-                "end_time": 17.5
             }]
+            // }, {
+            //     "event_name": "Event D",
+            //     "start_time": 13,
+            //     "end_time": 14.5
+            // }, {
+            //     "event_name": "Event E",
+            //     "start_time": 13,
+            //     "end_time": 13.5
+            // }, {
+            //     "event_name": "Event F",
+            //     "start_time": 14,
+            //     "end_time": 14.5
+            // }, {
+            //     "event_name": "Event G",
+            //     "start_time": 15,
+            //     "end_time": 16
+            // }, {
+            //     "event_name": "Event H",
+            //     "start_time": 15,
+            //     "end_time": 16.5
+            // }, {
+            //     "event_name": "Event I",
+            //     "start_time": 15.5,
+            //     "end_time": 17.0
+            // }, {
+            //     "event_name": "Event J",
+            //     "start_time": 16.5,
+            //     "end_time": 17.5
+            // }]
             that.displayAppointments(ajaxresponse, view)
         })
     },
