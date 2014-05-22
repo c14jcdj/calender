@@ -22,7 +22,7 @@ Calender.prototype = {
     getCalenderInfo: function() {
         //Would have ajax call to server to get JSON
         //returning Month and Day the first is on
-        return ["May", "Thursday", 31]
+        return ["May", "Thursday", 30]
     },
 
     fillOutCalender: function(info) {
@@ -34,21 +34,16 @@ Calender.prototype = {
         for (var i = 1; i < numOfDays + 1; i++) {
             $('tr:nth-child(' + row + ') td:nth-child(' + col + ')').html(i)
             col = col + 1;
-            if (col == 8) {
+            if (col == 8 && i != numOfDays) {
+                $('table').append('<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>')
                 col = 1;
                 row = row + 1;
             }
         }
 
-        this.checkForEmptyRow();
-    },
-
-    checkForEmptyRow: function() {
-        var lastRow = $('tr:nth-child(8)')
-        if (lastRow.val() == "") {
-            lastRow.remove();
-        }
     }
+
+
 }
 
 function CalenderController() {}
