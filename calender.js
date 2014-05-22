@@ -50,20 +50,22 @@ View.prototype = {
 
 
                 var rectWidth = parseInt($('.daycontainer').css('width'))
-                var rectHeight = (parseInt($('.daycontainer').css('height')) / 24) * 3
+                var oneHour = (parseInt($('.daycontainer').css('height')) / 24) * 3
+                var hours = endTime - startTime
+                var rectHeight = hours * oneHour
                 if (aptArray[i] == 1) {
-                    var rectY = (startTime * rectHeight)
+                    var rectY = (startTime * oneHour)
                     var rectX = 0
-                    var textNameX = startTime * rectHeight + (rectHeight / 2)
+                    var textNameX = startTime * oneHour + (oneHour / 2)
                     var textNameY = rectWidth / 6
-                    var textTimeX = startTime * rectHeight + (rectHeight / 2)
+                    var textTimeX = startTime * oneHour + (oneHour / 2)
                     var textTimeY = rectWidth / 2.5
 
                 } else if (aptArray[i] == 2) {
-                    rectY = (startTime * rectHeight)
+                    rectY = (startTime * oneHour)
                     rectWidth = rectWidth / 2.2
-                    textNameX = startTime * rectHeight + (rectHeight / 2)
-                    textTimeX = startTime * rectHeight + (rectHeight / 1.2)
+                    textNameX = startTime * oneHour + (oneHour / 2)
+                    textTimeX = startTime * oneHour + (oneHour / 1.2)
                     if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
                         textNameY = rectWidth / 3
                         textTimeY = rectWidth / 3
@@ -75,10 +77,10 @@ View.prototype = {
                     }
                 } else if (aptArray[i] == 3) {
                     if (groupAptsArray[1]['end_time'] < groupAptsArray[2]['start_time']) {
-                        rectY = (startTime * rectHeight)
+                        rectY = (startTime * oneHour)
                         rectWidth = rectWidth / 2.2
-                        textNameX = startTime * rectHeight + (rectHeight / 2)
-                        textTimeX = startTime * rectHeight + (rectHeight / 1.2)
+                        textNameX = startTime * oneHour + (oneHour / 2)
+                        textTimeX = startTime * oneHour + (oneHour / 1.2)
                         if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
                             textNameY = rectWidth / 3
                             textTimeY = rectWidth / 3
@@ -93,6 +95,7 @@ View.prototype = {
                     console.log('hey')
                 }
                 ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                console.log('rH2' + rectHeight)
                 ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
                 ctx.font = "15px Georgia";
                 ctx.fillStyle = '#000000';
@@ -105,6 +108,9 @@ View.prototype = {
 
     howManyBlocks: function(appointments) {
         var aptArray = []
+        if (appointments.length == 1) {
+            return [1]
+        }
         for (var i = 0; i < appointments.length - 1; i++) {
             var counter = 1
             var nextAptStart = appointments[i + 1]['start_time']
@@ -194,8 +200,8 @@ Calender.prototype = {
             var ajaxresponse = [{
                 "event_name": "Event A",
                 "start_time": 9,
-                "end_time": 10
-            }, {
+                "end_time": 11
+            },{
                 "event_name": "Event B",
                 "start_time": 11,
                 "end_time": 12
