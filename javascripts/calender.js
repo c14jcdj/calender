@@ -214,6 +214,8 @@ View.prototype = {
                 }
                 ctx.fillStyle = 'rgba(255,255,255,0.5)';
                 ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+                ctx.strokeStyle = "black"
+                ctx.strokeRect(rectX, rectY, rectWidth, rectHeight);
                 ctx.fillStyle = '#000000';
                 ctx.fillText(textName, textNameY, textNameX);
                 ctx.fillText(textTime, textTimeY, textTimeX);
