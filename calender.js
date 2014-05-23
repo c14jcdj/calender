@@ -47,8 +47,6 @@ View.prototype = {
                 }
                 var textName = eventName + ": "
                 var textTime = startTime + startTimeSuffix + "-" + endTime + endTimeSuffix
-
-
                 var rectWidth = parseInt($('.daycontainer').css('width'))
                 var oneHour = (parseInt($('.daycontainer').css('height')) / 24) * 3
                 var hours = endTime - startTime
@@ -90,6 +88,25 @@ View.prototype = {
                             rectX = rectWidth + 6
                             textNameY = rectWidth + rectWidth / 5
                             textTimeY = rectWidth + rectWidth / 5
+                        }
+                    } else {
+                        rectHeight = hours * oneHour
+                        rectY = (startTime * oneHour) - 25
+                        rectWidth = rectWidth / 3.3
+                        textNameX = startTime * oneHour + (oneHour / 5)
+                        textTimeX = startTime * oneHour + (oneHour / 2.5)
+                        if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
+                            textNameY = rectWidth / 7
+                            textTimeY = rectWidth / 7
+                            rectX = 2
+                        } else if (groupAptsArray.indexOf(groupAptsArray[j]) == 1) {
+                            rectX = rectWidth + 6
+                            textNameY = rectWidth + rectWidth / 8
+                            textTimeY = rectWidth + rectWidth / 8
+                        } else {
+                            rectX = rectWidth * 2 + 8
+                            textNameY = rectWidth + rectWidth + rectWidth / 8
+                            textTimeY = rectWidth + rectWidth + rectWidth / 8
                         }
                     }
                 } else {
@@ -229,19 +246,19 @@ Calender.prototype = {
                 "event_name": "Event F",
                 "start_time": 14,
                 "end_time": 14.5
+            }, {
+                "event_name": "Event G",
+                "start_time": 15,
+                "end_time": 16
+            }, {
+                "event_name": "Event H",
+                "start_time": 15,
+                "end_time": 16.5
+            }, {
+                "event_name": "Event I",
+                "start_time": 15.5,
+                "end_time": 17.0
             }]
-            // }, {
-            //     "event_name": "Event G",
-            //     "start_time": 15,
-            //     "end_time": 16
-            // }, {
-            //     "event_name": "Event H",
-            //     "start_time": 15,
-            //     "end_time": 16.5
-            // }, {
-            //     "event_name": "Event I",
-            //     "start_time": 15.5,
-            //     "end_time": 17.0
             // }, {
             //     "event_name": "Event J",
             //     "start_time": 16.5,
