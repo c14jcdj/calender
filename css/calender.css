@@ -2,7 +2,6 @@
 body {
   margin: 0;
   padding: 0;
-  /*background-image: url('images/ocean.jpg')*/
 }
 
 .background {
@@ -19,7 +18,7 @@ body {
 .container{
    position: absolute;
    top: 50%;
-   margin-top: -250px;/* half of #content height*/
+   margin-top: -250px;
    left: 0;
    width: 100%;
 }
@@ -54,7 +53,7 @@ td {
 .hoverable td:hover {
   color: white;
   text-shadow:
-    -2px -2px 0 black,
+    -1px -1px 0 black,
     1px -1px 0 black,
     -1px 1px 0 black,
     1px 1px 0 black;
@@ -118,7 +117,7 @@ button {
 }
 
 
-/*/////////////     MEDIA QUERIES 1920 - 1681      //////////////////*/
+/*/////////////     MEDIA QUERIES       //////////////////*/
 
 @media (max-height:  1200px) {
  button{

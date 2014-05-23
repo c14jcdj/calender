@@ -337,6 +337,7 @@ Calender.prototype = {
                 "event_name": "Event H",
                 "start_time": 15,
                 "end_time": 16.5
+
             }, {
                 "event_name": "Event I",
                 "start_time": 15.5,
