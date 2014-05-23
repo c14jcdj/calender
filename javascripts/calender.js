@@ -41,7 +41,21 @@ View.prototype = {
         }
     },
 
-
+    convertTime: function(time) {
+        if (time <= 12.5) {
+            if (time % 1 == 0) {
+                return time
+            } else {
+                return time - (time % 1) + ":30"
+            }
+        } else {
+            if (time % 1 == 0) {
+                return time - 12
+            } else {
+                return time - (12 + time % 1) + ":30"
+            }
+        }
+    },
 
     renderApts: function(appointments, calender) {
         var c = document.getElementById("myCanvas");
@@ -60,7 +74,7 @@ View.prototype = {
                 var startTimeSuffix = this.determineSuffix(startTime)
                 var endTimeSuffix = this.determineSuffix(endTime)
                 var textName = eventName + ": "
-                var textTime = startTime + startTimeSuffix + "-" + endTime + endTimeSuffix
+                var textTime = this.convertTime(startTime) + startTimeSuffix + "-" + this.convertTime(endTime) + endTimeSuffix
                 var rectWidth = 320
                 var oneHour = (parseInt($('.daycontainer').css('height')) / 24) * 3
                 var hoursOfEvent = endTime - startTime
