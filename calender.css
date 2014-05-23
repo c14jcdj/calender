@@ -84,12 +84,24 @@ td {
 
 #myCanvas {
   position: absolute;
-  border: 2px solid green;
   z-index: 1;
   width: 100%;
   height: 3020px;
   top: 0;
   left: 0;
+}
+
+button {
+  z-index: 1;
+  position: absolute;
+  display: none;
+  width: 700px;
+  height: 50px;
+  background-color: rgba(208,32,144, .1);
+  left: 7.5%;
+  top: 82%;
+  color: white;
+  font-size: 2em;
 }
 
 

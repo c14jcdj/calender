@@ -18,6 +18,21 @@ View.prototype = {
         $('.daycontainer').css('display', 'inline-block')
     },
 
+    toggleHideApts: function() {
+        $('button').css('display', 'inline-block');
+        $('button').on('click', function() {
+            $('.daycontainer').css('display', 'none');
+            $(this).css('display', 'none')
+            $('#month').css({
+                'width': '84%',
+                'height': '450px',
+                'margin-left': 'auto',
+                'float': 'none',
+                'position': 'static'
+            })
+        })
+    },
+
     renderApts: function(appointments) {
         console.log(appointments)
         var c = document.getElementById("myCanvas");
@@ -292,6 +307,7 @@ Calender.prototype = {
 
     displayAppointments: function(appointments, view) {
         view.toggleSideBar();
+        view.toggleHideApts();
         view.renderApts(appointments);
     }
 
