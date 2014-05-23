@@ -41,6 +41,8 @@ View.prototype = {
         }
     },
 
+
+
     renderApts: function(appointments, calender) {
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
@@ -68,43 +70,60 @@ View.prototype = {
                 var rectHeight = hoursOfEvent * oneHour
                 var textNameY;
                 var textTimeY;
+                var varForTwoBlock = {
+                    "rectWidth": rectWidth / 2.2,
+                    "textNameX": startTime * oneHour + (oneHour / 2),
+                    "textTimeX": startTime * oneHour + (oneHour / 1.5),
+                    "textNameY": rectWidth / 5,
+                    "textTimeY": rectWidth / 5,
+                    "rectX": 2
+                };
+                var varForSecondBlock = function(rectWidth) {
+                    return {
+                        "rectX": rectWidth + 6,
+                        "textNameY": rectWidth + rectWidth / 5,
+                        "textTimeY": rectWidth + rectWidth / 5
+                    }
+                };
+
+                var checkForFirstEl = groupAptsArray.indexOf(groupAptsArray[j]) == 0;
                 if (aptArray[i] == 1) {
                     rectX = 0
                     textNameX = textTimeX = (startTime * oneHour) + oneHour / 2
                     textNameY = rectWidth / 6
                     textTimeY = rectWidth / 2.5
                 } else if (aptArray[i] == 2) {
-                    rectWidth = rectWidth / 2.2
-                    textNameX = startTime * oneHour + (oneHour / 2)
-                    textTimeX = startTime * oneHour + (oneHour / 1.5)
+                    rectWidth = varForTwoBlock.rectWidth
+                    textNameX = varForTwoBlock.textNameX
+                    textTimeX = varForTwoBlock.textTimeX
                     if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
-                        textNameY = rectWidth / 3
-                        textTimeY = rectWidth / 3
-                        rectX = 2
+                        textNameY = varForTwoBlock.textNameY
+                        textTimeY = varForTwoBlock.textTimeY
+                        rectX = varForTwoBlock.rectX
                     } else {
-                        rectX = rectWidth + 6
-                        textNameY = rectWidth + rectWidth / 5
-                        textTimeY = rectWidth + rectWidth / 5
+                        rectX = varForSecondBlock(rectWidth).rectX
+                        textNameY = varForSecondBlock(rectWidth).textNameY
+                        textTimeY = varForSecondBlock(rectWidth).textTimeY
                     }
                 } else if (aptArray[i] == 3) {
                     if (groupAptsArray[1]['end_time'] < groupAptsArray[2]['start_time']) {
-                        rectWidth = rectWidth / 2.2
-                        textNameX = startTime * oneHour + (oneHour / 2)
-                        textTimeX = startTime * oneHour + (oneHour / 1.5)
-                        if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
+                        rectWidth = varForTwoBlock.rectWidth
+                        textNameX = varForTwoBlock.textNameX
+                        textTimeX = varForTwoBlock.textTimeX
+                        if (checkForFirstEl) {
                             textNameY = rectWidth / 3
                             textTimeY = rectWidth / 3
                             rectX = 2
                         } else {
-                            rectX = rectWidth + 6
-                            textNameY = rectWidth + rectWidth / 5
-                            textTimeY = rectWidth + rectWidth / 5
+                            rectX = varForSecondBlock(rectWidth).rectX
+                            textNameY = varForSecondBlock(rectWidth).textNameY
+                            textTimeY = varForSecondBlock(rectWidth).textTimeY
                         }
                     } else {
                         rectWidth = rectWidth / 3.3
                         textNameX = startTime * oneHour + (oneHour / 5)
                         textTimeX = startTime * oneHour + (oneHour / 2.5)
-                        if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
+                        if (checkForFirstEl) {
                             textNameY = rectWidth / 7
                             textTimeY = rectWidth / 7
                             rectX = 2
