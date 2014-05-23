@@ -50,20 +50,20 @@ View.prototype = {
                 var rectWidth = parseInt($('.daycontainer').css('width'))
                 var oneHour = (parseInt($('.daycontainer').css('height')) / 24) * 3
                 var hours = endTime - startTime
-                var rectHeight = hours * oneHour - 5
+                var rectHeight = hours * oneHour
                 if (aptArray[i] == 1) {
-                    var rectY = (startTime * oneHour) - 15
+                    var rectY = (startTime * oneHour)
                     var rectX = 0
-                    var textNameX = startTime * oneHour + (oneHour / 2)
+                    var textNameX = (startTime * oneHour) + oneHour
                     var textNameY = rectWidth / 6
-                    var textTimeX = startTime * oneHour + (oneHour / 2)
+                    var textTimeX = (startTime * oneHour) + oneHour
                     var textTimeY = rectWidth / 2.5
 
                 } else if (aptArray[i] == 2) {
-                    rectY = (startTime * oneHour) - 15
+                    rectY = (startTime * oneHour)
                     rectWidth = rectWidth / 2.2
-                    textNameX = startTime * oneHour + (oneHour / 5)
-                    textTimeX = startTime * oneHour + (oneHour / 2.5)
+                    textNameX = startTime * oneHour + (oneHour / 2)
+                    textTimeX = startTime * oneHour + (oneHour / 1.5)
                     if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
                         textNameY = rectWidth / 3
                         textTimeY = rectWidth / 3
@@ -76,10 +76,10 @@ View.prototype = {
                 } else if (aptArray[i] == 3) {
                     if (groupAptsArray[1]['end_time'] < groupAptsArray[2]['start_time']) {
                         rectHeight = hours * oneHour
-                        rectY = (startTime * oneHour) - 20
+                        rectY = (startTime * oneHour)
                         rectWidth = rectWidth / 2.2
-                        textNameX = startTime * oneHour + (oneHour / 5)
-                        textTimeX = startTime * oneHour + (oneHour / 2.5)
+                        textNameX = startTime * oneHour + (oneHour / 2)
+                        textTimeX = startTime * oneHour + (oneHour / 1.5)
                         if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
                             textNameY = rectWidth / 3
                             textTimeY = rectWidth / 3
@@ -91,7 +91,7 @@ View.prototype = {
                         }
                     } else {
                         rectHeight = hours * oneHour
-                        rectY = (startTime * oneHour) - 25
+                        rectY = (startTime * oneHour)
                         rectWidth = rectWidth / 3.3
                         textNameX = startTime * oneHour + (oneHour / 5)
                         textTimeX = startTime * oneHour + (oneHour / 2.5)
@@ -111,10 +111,10 @@ View.prototype = {
                     }
                 } else {
                     rectHeight = hours * oneHour
-                    rectY = (startTime * oneHour) - 25
+                    rectY = (startTime * oneHour)
                     rectWidth = rectWidth / 3.3
-                    textNameX = startTime * oneHour + (oneHour / 5)
-                    textTimeX = startTime * oneHour + (oneHour / 2.5)
+                    textNameX = startTime * oneHour + (oneHour / 2)
+                    textTimeX = startTime * oneHour + (oneHour / 1.5)
                     if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
                         textNameY = rectWidth / 7
                         textTimeY = rectWidth / 7
@@ -137,8 +137,8 @@ View.prototype = {
 
                 if (hours == .5) {
                     ctx.font = "11px Georgia";
-                    textNameX = startTime * oneHour - 5
-                    textTimeX = startTime * oneHour + 5
+                    textNameX = startTime * oneHour + oneHour / 3 - 5
+                    textTimeX = startTime * oneHour + oneHour / 3 + 5
                 } else {
                     ctx.font = "15px Georgia";
                 }
