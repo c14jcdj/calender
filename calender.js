@@ -110,7 +110,29 @@ View.prototype = {
                         }
                     }
                 } else {
-                    console.log('overlap goes')
+                    rectHeight = hours * oneHour
+                    rectY = (startTime * oneHour) - 25
+                    rectWidth = rectWidth / 3.3
+                    textNameX = startTime * oneHour + (oneHour / 5)
+                    textTimeX = startTime * oneHour + (oneHour / 2.5)
+                    if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
+                        textNameY = rectWidth / 7
+                        textTimeY = rectWidth / 7
+                        rectX = 2
+                    } else if (groupAptsArray.indexOf(groupAptsArray[j]) == 1) {
+                        rectX = rectWidth + 6
+                        textNameY = rectWidth + rectWidth / 8
+                        textTimeY = rectWidth + rectWidth / 8
+                    } else if (groupAptsArray.indexOf(groupAptsArray[j]) == 2) {
+                        rectX = rectWidth * 2 + 8
+                        textNameY = rectWidth + rectWidth + rectWidth / 8
+                        textTimeY = rectWidth + rectWidth + rectWidth / 8
+                    } else {
+                        rectX = 2
+                        rectWidth = rectWidth * 2 + 4
+                        textNameY = rectWidth / 4
+                        textTimeY = rectWidth / 4
+                    }
                 }
 
                 if (hours == .5) {
@@ -258,12 +280,12 @@ Calender.prototype = {
                 "event_name": "Event I",
                 "start_time": 15.5,
                 "end_time": 17.0
+
+            }, {
+                "event_name": "Event J",
+                "start_time": 16.5,
+                "end_time": 17.5
             }]
-            // }, {
-            //     "event_name": "Event J",
-            //     "start_time": 16.5,
-            //     "end_time": 17.5
-            // }]
             that.displayAppointments(ajaxresponse, view)
         })
     },
