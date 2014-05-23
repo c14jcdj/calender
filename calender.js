@@ -78,6 +78,11 @@ View.prototype = {
                     "textTimeY": rectWidth / 5,
                     "rectX": 2
                 };
+                varForThreeBlock = {
+                    "rectWidth": rectWidth / 3.3,
+                    "textNameX": startTime * oneHour + (oneHour / 2),
+                    "textTimeX": startTime * oneHour + (oneHour / 1.5)
+                }
                 var varForSecondBlock = function(rectWidth) {
                     return {
                         "rectX": rectWidth + 6,
@@ -85,7 +90,30 @@ View.prototype = {
                         "textTimeY": rectWidth + rectWidth / 5
                     }
                 };
-
+                var varForFirstOfThreeBlocks = function(rectWidth) {
+                    return {
+                        "textNameY": rectWidth / 7,
+                        "textTimeY": rectWidth / 7,
+                        "rectX": 2
+                    }
+                };
+                var varForSecondOfThreeBlocks = function(rectWidth) {
+                    return {
+                        "rectX": rectWidth + 6,
+                        "textNameY": rectWidth + rectWidth / 8,
+                        "textTimeY": rectWidth + rectWidth / 8
+                    }
+                };
+                var varForThirdOfThreeBlocks = function(rectWidth) {
+                    return {
+                        "rectX": rectWidth * 2 + 8,
+                        "textNameY": rectWidth + rectWidth + rectWidth / 8,
+                        "textTimeY": rectWidth + rectWidth + rectWidth / 8
+                    }
+                };
+                var noOverlap = function() {
+                    return groupAptsArray[1]['end_time'] < groupAptsArray[2]['start_time'];
+                }
                 var checkForFirstEl = groupAptsArray.indexOf(groupAptsArray[j]) == 0;
                 if (aptArray[i] == 1) {
                     rectX = 0
@@ -96,7 +124,7 @@ View.prototype = {
                     rectWidth = varForTwoBlock.rectWidth
                     textNameX = varForTwoBlock.textNameX
                     textTimeX = varForTwoBlock.textTimeX
-                    if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
+                    if (checkForFirstEl) {
                         textNameY = varForTwoBlock.textNameY
                         textTimeY = varForTwoBlock.textTimeY
                         rectX = varForTwoBlock.rectX
@@ -106,7 +134,7 @@ View.prototype = {
                         textTimeY = varForSecondBlock(rectWidth).textTimeY
                     }
                 } else if (aptArray[i] == 3) {
-                    if (groupAptsArray[1]['end_time'] < groupAptsArray[2]['start_time']) {
+                    if (noOverlap()) {
                         rectWidth = varForTwoBlock.rectWidth
                         textNameX = varForTwoBlock.textNameX
                         textTimeX = varForTwoBlock.textTimeX
@@ -120,27 +148,27 @@ View.prototype = {
                             textTimeY = varForSecondBlock(rectWidth).textTimeY
                         }
                     } else {
-                        rectWidth = rectWidth / 3.3
-                        textNameX = startTime * oneHour + (oneHour / 5)
-                        textTimeX = startTime * oneHour + (oneHour / 2.5)
+                        rectWidth = varForThreeBlock.rectWidth
+                        textNameX = varForThreeBlock.textNameX
+                        textTimeX = varForThreeBlock.textTimeX
                         if (checkForFirstEl) {
-                            textNameY = rectWidth / 7
-                            textTimeY = rectWidth / 7
-                            rectX = 2
+                            textNameY = varForFirstOfThreeBlocks(rectWidth).textNameY
+                            textTimeY = varForFirstOfThreeBlocks(rectWidth).textTimeY
+                            rectX = varForFirstOfThreeBlocks(rectWidth).rectX
                         } else if (groupAptsArray.indexOf(groupAptsArray[j]) == 1) {
-                            rectX = rectWidth + 6
-                            textNameY = rectWidth + rectWidth / 8
-                            textTimeY = rectWidth + rectWidth / 8
+                            rectX = varForSecondOfThreeBlocks(rectWidth).rectX
+                            textNameY = varForSecondOfThreeBlocks(rectWidth).textNameY
+                            textTimeY = varForSecondOfThreeBlocks(rectWidth).textTimeY
                         } else {
-                            rectX = rectWidth * 2 + 8
-                            textNameY = rectWidth + rectWidth + rectWidth / 8
-                            textTimeY = rectWidth + rectWidth + rectWidth / 8
+                            rectX = varForThirdOfThreeBlocks(rectWidth).rectX
+                            textNameY = varForThirdOfThreeBlocks(rectWidth).textNameY
+                            textTimeY = varForThirdOfThreeBlocks(rectWidth).textTimeY
                         }
                     }
                 } else {
-                    rectWidth = rectWidth / 3.3
-                    textNameX = startTime * oneHour + (oneHour / 2)
-                    textTimeX = startTime * oneHour + (oneHour / 1.5)
+                    rectWidth = varForThreeBlock.rectWidth
+                    textNameX = varForThreeBlock.textNameX
+                    textTimeX = varForThreeBlock.textTimeX
                     if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
                         textNameY = rectWidth / 7
                         textTimeY = rectWidth / 7
