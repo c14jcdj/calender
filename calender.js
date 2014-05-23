@@ -114,7 +114,10 @@ View.prototype = {
                 var noOverlap = function() {
                     return groupAptsArray[1]['end_time'] < groupAptsArray[2]['start_time'];
                 }
-                var checkForFirstEl = groupAptsArray.indexOf(groupAptsArray[j]) == 0;
+                var checkLocation = function(groupAptsArray, index) {
+                    return groupAptsArray.indexOf(groupAptsArray[j]) == index
+                }
+
                 if (aptArray[i] == 1) {
                     rectX = 0
                     textNameX = textTimeX = (startTime * oneHour) + oneHour / 2
@@ -124,7 +127,7 @@ View.prototype = {
                     rectWidth = varForTwoBlock.rectWidth
                     textNameX = varForTwoBlock.textNameX
                     textTimeX = varForTwoBlock.textTimeX
-                    if (checkForFirstEl) {
+                    if (checkLocation(groupAptsArray, 0)) {
                         textNameY = varForTwoBlock.textNameY
                         textTimeY = varForTwoBlock.textTimeY
                         rectX = varForTwoBlock.rectX
@@ -138,7 +141,7 @@ View.prototype = {
                         rectWidth = varForTwoBlock.rectWidth
                         textNameX = varForTwoBlock.textNameX
                         textTimeX = varForTwoBlock.textTimeX
-                        if (checkForFirstEl) {
+                        if (checkLocation(groupAptsArray, 0)) {
                             textNameY = rectWidth / 3
                             textTimeY = rectWidth / 3
                             rectX = 2
@@ -151,11 +154,11 @@ View.prototype = {
                         rectWidth = varForThreeBlock.rectWidth
                         textNameX = varForThreeBlock.textNameX
                         textTimeX = varForThreeBlock.textTimeX
-                        if (checkForFirstEl) {
+                        if (checkLocation(groupAptsArray, 0)) {
                             textNameY = varForFirstOfThreeBlocks(rectWidth).textNameY
                             textTimeY = varForFirstOfThreeBlocks(rectWidth).textTimeY
                             rectX = varForFirstOfThreeBlocks(rectWidth).rectX
-                        } else if (groupAptsArray.indexOf(groupAptsArray[j]) == 1) {
+                        } else if (checkLocation(groupAptsArray, 1)) {
                             rectX = varForSecondOfThreeBlocks(rectWidth).rectX
                             textNameY = varForSecondOfThreeBlocks(rectWidth).textNameY
                             textTimeY = varForSecondOfThreeBlocks(rectWidth).textTimeY
@@ -169,18 +172,18 @@ View.prototype = {
                     rectWidth = varForThreeBlock.rectWidth
                     textNameX = varForThreeBlock.textNameX
                     textTimeX = varForThreeBlock.textTimeX
-                    if (groupAptsArray.indexOf(groupAptsArray[j]) == 0) {
-                        textNameY = rectWidth / 7
-                        textTimeY = rectWidth / 7
-                        rectX = 2
-                    } else if (groupAptsArray.indexOf(groupAptsArray[j]) == 1) {
-                        rectX = rectWidth + 6
-                        textNameY = rectWidth + rectWidth / 8
-                        textTimeY = rectWidth + rectWidth / 8
-                    } else if (groupAptsArray.indexOf(groupAptsArray[j]) == 2) {
-                        rectX = rectWidth * 2 + 8
-                        textNameY = rectWidth + rectWidth + rectWidth / 8
-                        textTimeY = rectWidth + rectWidth + rectWidth / 8
+                    if (checkLocation(groupAptsArray, 0)) {
+                        textNameY = varForFirstOfThreeBlocks(rectWidth).textNameY
+                        textTimeY = varForFirstOfThreeBlocks(rectWidth).textTimeY
+                        rectX = varForFirstOfThreeBlocks(rectWidth).rectX
+                    } else if (checkLocation(groupAptsArray, 1)) {
+                        rectX = varForSecondOfThreeBlocks(rectWidth).rectX
+                        textNameY = varForSecondOfThreeBlocks(rectWidth).textNameY
+                        textTimeY = varForSecondOfThreeBlocks(rectWidth).textTimeY
+                    } else if (checkLocation(groupAptsArray, 2)) {
+                        rectX = varForThirdOfThreeBlocks(rectWidth).rectX
+                        textNameY = varForThirdOfThreeBlocks(rectWidth).textNameY
+                        textTimeY = varForThirdOfThreeBlocks(rectWidth).textTimeY
                     } else {
                         rectX = 2
                         rectWidth = rectWidth * 2 + 4
@@ -188,7 +191,6 @@ View.prototype = {
                         textTimeY = rectWidth / 4
                     }
                 }
-
                 if (hoursOfEvent == .5) {
                     ctx.font = "11px Georgia";
                     textNameX = startTime * oneHour + oneHour / 3 - 5
@@ -201,16 +203,12 @@ View.prototype = {
                 ctx.fillStyle = '#000000';
                 ctx.fillText(textName, textNameY, textNameX);
                 ctx.fillText(textTime, textTimeY, textTimeX);
-
             }
         }
     },
-
-
 }
 
 function Calender() {
-
     this.dayConverter = {
         'Sunday': 1,
         'Monday': 2,
@@ -220,38 +218,34 @@ function Calender() {
         'Friday': 6,
         'Saturday': 7,
     }
-
 }
-
 
 Calender.prototype = {
     howManyBlocks: function(appointments) {
         var aptArray = []
-        if (appointments.length == 1) {
+        var aptLength = appointments.length
+        if (aptLength == 1) {
             return [1]
         }
-        for (var i = 0; i < appointments.length - 1; i++) {
+        for (var i = 0; i < aptLength - 1; i++) {
             var counter = 1
             var nextAptStart = appointments[i + 1]['start_time']
             var nextAptEnd = appointments[i + 1]['end_time']
             var thisAptStart = appointments[i]['start_time']
             var thisAptEnd = appointments[i]['end_time']
-            if (thisAptStart <= nextAptStart && nextAptStart < thisAptEnd) {
+            if (thisAptStart <= nextAptStart && nextAptStart <= thisAptEnd) {
                 var j = i
-                while (appointments[i]['start_time'] <= appointments[j + 1]['start_time'] && appointments[j + 1]['start_time'] < thisAptEnd) {
+                while (thisAptStart <= appointments[j + 1]['start_time'] && appointments[j + 1]['start_time'] < thisAptEnd) {
                     counter = counter + 1;
-                    if (appointments[j + 1]['end_time'] > appointments[i]['end_time']) {
+                    if (appointments[j + 1]['end_time'] > thisAptEnd) {
                         thisAptEnd = appointments[j + 1]['end_time']
-                    } else {
-                        thisAptEnd = appointments[i]['end_time']
                     }
                     j = j + 1;
-                    if (i + (j - i) >= (appointments.length - 1)) {
+                    if (i + (j - i) >= (aptLength - 1)) {
                         break
                     }
                 }
                 aptArray.push(counter)
-
                 i = j
             } else {
                 counter = 1
@@ -355,12 +349,9 @@ Calender.prototype = {
 function CalenderController() {}
 
 CalenderController.prototype = {
-
     run: function(calender, view) {
         var info = calender.getCalenderInfo();
         calender.fillOutCalender(info);
         calender.bindDays(view);
-
-
     }
 }
