@@ -78,9 +78,9 @@ View.prototype = {
                     "textTimeY": rectWidth / 5,
                     "rectX": 2
                 };
-                varForThreeBlock = {
+                var varForThreeBlock = {
                     "rectWidth": rectWidth / 3.3,
-                    "textNameX": startTime * oneHour + (oneHour / 2),
+                    "textNameX": startTime * oneHour + (oneHour / 2.3),
                     "textTimeX": startTime * oneHour + (oneHour / 1.5)
                 }
                 var varForSecondBlock = function(rectWidth) {
