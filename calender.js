@@ -33,49 +33,47 @@ View.prototype = {
         })
     },
 
-    renderApts: function(appointments) {
-        console.log(appointments)
+    determineSuffix: function(time) {
+        if (time < 12) {
+            return "am"
+        } else {
+            return "pm"
+        }
+    },
+
+    renderApts: function(appointments, calender) {
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
-        ctx.clearRect(0, 0, c.width, c.height)
         c.height = 1500;
-        var aptArray = this.howManyBlocks(appointments)
-        console.log(aptArray)
+        ctx.clearRect(0, 0, c.width, c.height)
+        var aptArray = calender.howManyBlocks(appointments)
         var counter = 0
         for (var i = 0; i < aptArray.length; i++) {
-            groupAptsArray = appointments.slice(counter, counter + aptArray[i])
+            var groupAptsArray = appointments.slice(counter, counter + aptArray[i])
             counter = counter + aptArray[i]
-            console.log(groupAptsArray)
             for (var j = 0; j < groupAptsArray.length; j++) {
                 var startTime = groupAptsArray[j]["start_time"]
                 var endTime = groupAptsArray[j]["end_time"]
                 var eventName = groupAptsArray[j]["event_name"]
-                if (startTime < 12) {
-                    startTimeSuffix = "am"
-                } else {
-                    startTimeSuffix = "pm"
-                }
-                if (endTime >= 12) {
-                    endTimeSuffix = "pm"
-                } else {
-                    endTimeSuffix = "am"
-                }
+                var startTimeSuffix = this.determineSuffix(startTime)
+                var endTimeSuffix = this.determineSuffix(endTime)
                 var textName = eventName + ": "
                 var textTime = startTime + startTimeSuffix + "-" + endTime + endTimeSuffix
                 var rectWidth = 320
                 var oneHour = (parseInt($('.daycontainer').css('height')) / 24) * 3
-                var hours = endTime - startTime
-                var rectHeight = hours * oneHour
+                var hoursOfEvent = endTime - startTime
+                var rectX;
+                var rectY = (startTime * oneHour)
+                var rectWidth;
+                var rectHeight = hoursOfEvent * oneHour
+                var textNameY;
+                var textTimeY;
                 if (aptArray[i] == 1) {
-                    var rectY = (startTime * oneHour)
-                    var rectX = 0
-                    var textNameX = (startTime * oneHour) + oneHour
-                    var textNameY = rectWidth / 6
-                    var textTimeX = (startTime * oneHour) + oneHour
-                    var textTimeY = rectWidth / 2.5
-
+                    rectX = 0
+                    textNameX = textTimeX = (startTime * oneHour) + oneHour / 2
+                    textNameY = rectWidth / 6
+                    textTimeY = rectWidth / 2.5
                 } else if (aptArray[i] == 2) {
-                    rectY = (startTime * oneHour)
                     rectWidth = rectWidth / 2.2
                     textNameX = startTime * oneHour + (oneHour / 2)
                     textTimeX = startTime * oneHour + (oneHour / 1.5)
@@ -90,8 +88,6 @@ View.prototype = {
                     }
                 } else if (aptArray[i] == 3) {
                     if (groupAptsArray[1]['end_time'] < groupAptsArray[2]['start_time']) {
-                        rectHeight = hours * oneHour
-                        rectY = (startTime * oneHour)
                         rectWidth = rectWidth / 2.2
                         textNameX = startTime * oneHour + (oneHour / 2)
                         textTimeX = startTime * oneHour + (oneHour / 1.5)
@@ -105,8 +101,6 @@ View.prototype = {
                             textTimeY = rectWidth + rectWidth / 5
                         }
                     } else {
-                        rectHeight = hours * oneHour
-                        rectY = (startTime * oneHour)
                         rectWidth = rectWidth / 3.3
                         textNameX = startTime * oneHour + (oneHour / 5)
                         textTimeX = startTime * oneHour + (oneHour / 2.5)
@@ -125,8 +119,6 @@ View.prototype = {
                         }
                     }
                 } else {
-                    rectHeight = hours * oneHour
-                    rectY = (startTime * oneHour)
                     rectWidth = rectWidth / 3.3
                     textNameX = startTime * oneHour + (oneHour / 2)
                     textTimeX = startTime * oneHour + (oneHour / 1.5)
@@ -150,7 +142,7 @@ View.prototype = {
                     }
                 }
 
-                if (hours == .5) {
+                if (hoursOfEvent == .5) {
                     ctx.font = "11px Georgia";
                     textNameX = startTime * oneHour + oneHour / 3 - 5
                     textTimeX = startTime * oneHour + oneHour / 3 + 5
@@ -158,7 +150,6 @@ View.prototype = {
                     ctx.font = "15px Georgia";
                 }
                 ctx.fillStyle = 'rgba(255,255,255,0.5)';
-                console.log('rH2' + rectHeight)
                 ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
                 ctx.fillStyle = '#000000';
                 ctx.fillText(textName, textNameY, textNameX);
@@ -168,6 +159,25 @@ View.prototype = {
         }
     },
 
+
+}
+
+function Calender() {
+
+    this.dayConverter = {
+        'Sunday': 1,
+        'Monday': 2,
+        'Tuesday': 3,
+        'Wednesday': 4,
+        'Thursday': 5,
+        'Friday': 6,
+        'Saturday': 7,
+    }
+
+}
+
+
+Calender.prototype = {
     howManyBlocks: function(appointments) {
         var aptArray = []
         if (appointments.length == 1) {
@@ -202,27 +212,8 @@ View.prototype = {
             }
         }
         return aptArray
-        console.log(aptArray)
-    }
+    },
 
-}
-
-function Calender() {
-
-    this.dayConverter = {
-        'Sunday': 1,
-        'Monday': 2,
-        'Tuesday': 3,
-        'Wednesday': 4,
-        'Thursday': 5,
-        'Friday': 6,
-        'Saturday': 7,
-    }
-
-}
-
-
-Calender.prototype = {
 
     getCalenderInfo: function() {
         //Would have ajax call to server to get JSON
@@ -262,7 +253,7 @@ Calender.prototype = {
             var ajaxresponse = [{
                 "event_name": "Event A",
                 "start_time": 9,
-                "end_time": 11
+                "end_time": 10
             }, {
                 "event_name": "Event B",
                 "start_time": 11,
@@ -308,7 +299,7 @@ Calender.prototype = {
     displayAppointments: function(appointments, view) {
         view.toggleSideBar();
         view.toggleHideApts();
-        view.renderApts(appointments);
+        view.renderApts(appointments, this);
     }
 
 
