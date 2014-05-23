@@ -286,7 +286,7 @@ Calender.prototype = {
             $('#month tr:nth-child(' + row + ') td:nth-child(' + col + ')').html(i)
             col = col + 1;
             if (col == 8 && i != numOfDays) {
-                $('#month').append('<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>')
+                $('#month').append('<tr class="hoverable"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>')
                 col = 1;
                 row = row + 1;
             }
