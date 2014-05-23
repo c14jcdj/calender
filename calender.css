@@ -1,7 +1,8 @@
+
 body {
   margin: 0;
   padding: 0;
-  background-image: url('images/ocean.jpg')
+  /*background-image: url('images/ocean.jpg')*/
 }
 
 .background {
@@ -95,16 +96,57 @@ button {
   z-index: 1;
   position: absolute;
   display: none;
-  width: 700px;
+  width: 55%;
   height: 50px;
   background-color: rgba(208,32,144, .1);
   left: 7.5%;
   top: 82%;
   color: white;
   font-size: 2em;
+
 }
 
 
+/*/////////////     MEDIA QUERIES 1920 - 1681      //////////////////*/
 
+@media (max-height:  1200px) {
+ button{
+  top: 67%;
+ }
+ }
 
+@media (max-height:  1080px) {
+ button{
+  top: 67%;
+ }
+ }
 
+@media (max-height:  1050px) {
+ button{
+  top: 70%;
+ }
+ }
+
+@media (max-height:  900px) {
+ button{
+  top: 72%;
+ }
+ }
+
+@media (max-height:  800px) {
+ button{
+  top: 74%;
+ }
+ }
+
+@media (max-height:  768px) {
+ button{
+  top: 75%;
+ }
+ }
+
+@media (max-height:  600px) {
+button{
+  top: 82%;
+}
+}

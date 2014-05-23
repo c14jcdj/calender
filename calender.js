@@ -62,7 +62,7 @@ View.prototype = {
                 }
                 var textName = eventName + ": "
                 var textTime = startTime + startTimeSuffix + "-" + endTime + endTimeSuffix
-                var rectWidth = parseInt($('.daycontainer').css('width'))
+                var rectWidth = 320
                 var oneHour = (parseInt($('.daycontainer').css('height')) / 24) * 3
                 var hours = endTime - startTime
                 var rectHeight = hours * oneHour
