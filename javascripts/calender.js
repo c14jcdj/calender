@@ -87,9 +87,9 @@ View.prototype = {
                 var varForTwoBlock = {
                     "rectWidth": rectWidth / 2.2,
                     "textNameX": startTime * oneHour + (oneHour / 2),
-                    "textTimeX": startTime * oneHour + (oneHour / 1.5),
-                    "textNameY": rectWidth / 5,
-                    "textTimeY": rectWidth / 5,
+                    "textTimeX": startTime * oneHour + (oneHour / 1.4),
+                    "textNameY": rectWidth / 11,
+                    "textTimeY": rectWidth / 11,
                     "rectX": 2
                 };
                 var varForThreeBlock = {
@@ -156,9 +156,9 @@ View.prototype = {
                         textNameX = varForTwoBlock.textNameX
                         textTimeX = varForTwoBlock.textTimeX
                         if (checkLocation(groupAptsArray, 0)) {
-                            textNameY = rectWidth / 3
-                            textTimeY = rectWidth / 3
-                            rectX = 2
+                            textNameY = varForFirstOfThreeBlocks(rectWidth).textNameY
+                            textTimeY = varForFirstOfThreeBlocks(rectWidth).textTimeY
+                            rectX = varForFirstOfThreeBlocks(rectWidth).rectX
                         } else {
                             rectX = varForSecondBlock(rectWidth).rectX
                             textNameY = varForSecondBlock(rectWidth).textNameY
